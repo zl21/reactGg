@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import axios from 'axios'
 import './css/login.less'
 import logo from './imgs/logo.png'
 
@@ -9,7 +10,12 @@ const {Item} = Form
 export default class Login extends Component {
   // 表单提交的回调
   onFinish = values => {
-      console.log('Received values of form: ', values);
+      // console.log('Received values of form: ', values);
+      const {username,password} = values;
+      axios.post('http://localhost:3000/login',{username,password}).then(
+        response => {console.log(response);},
+        error => {console.log(error);}
+      )
   };
 
   /* 
