@@ -1,48 +1,11 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, message as msg } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import axios from 'axios'
-import qs from 'querystring'
+import ajax from '../../ajax/ajax'
 import './css/login.less'
 import logo from './imgs/logo.png'
 
 const { Item } = Form
-
-// 配置超时时间
-axios.defaults.timeout = 2000;
-
-/* 
-  使用axios请求拦截器
-  参数:config，里面包含了本次请求所有的配置项（请求地址/方式/参数及参数格式）
-*/
-axios.interceptors.request.use((config) => {
-  // console.log(config);
-  // 如果发的是post请求，并且携带的是json格式的参数/数据，就要将数据处理一下
-  // 获取请求方式及参数
-  const { method, data } = config;
-  if (method.toLowerCase() === 'post' && data instanceof Object) {
-    config.data = qs.stringify(data);
-  }
-  return config;
-})
-
-/* 
-  axios的响应拦截器
-*/
-axios.interceptors.response.use(
-  // 响应成功的回调--状态码2开头
-  response => response.data,
-  err => {
-    // console.log(err);
-    let errmsg = '';
-    const { message } = err;
-    if (message.indexOf('401') !== -1) errmsg = '身份校验失败，请重新登录！';
-    else if (message.indexOf('Network Error') !== -1) errmsg = '请检查网络连接！'
-    else if (message.indexOf('timeout') !== -1) errmsg = '网络不稳定，连接超时！'
-    msg.error(errmsg);
-    return new Promise(() => { });
-  }
-)
 
 export default class Login extends Component {
   // 表单提交的回调
@@ -51,7 +14,7 @@ export default class Login extends Component {
     // 获取表单数据
     // 如果表单收集的输入框的name属性的值与后台所要的参数(key)是一致的，那就可以直接写对象，不用结构对象也可
     // const {username,password} = values;
-    let result = await axios.post('http://localhost:3000/login', values)
+    let result = await ajax.post('/login', values)
     console.log("result:",result);
     // axios发送post请求，默认会把参数通过请求体携带，那是以什么编码格式进行编码呢（urlencoded or json）？
   };
