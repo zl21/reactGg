@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import ajax from '../../ajax/ajax'
+import { reqLogin } from '../../ajax'
 import './css/login.less'
 import logo from './imgs/logo.png'
 
@@ -14,8 +14,8 @@ export default class Login extends Component {
     // 获取表单数据
     // 如果表单收集的输入框的name属性的值与后台所要的参数(key)是一致的，那就可以直接写对象，不用结构对象也可
     // const {username,password} = values;
-    let result = await ajax.post('/login', values)
-    console.log("result:",result);
+    let result = await reqLogin(values);
+    console.log("result:", result);
     // axios发送post请求，默认会把参数通过请求体携带，那是以什么编码格式进行编码呢（urlencoded or json）？
   };
 
