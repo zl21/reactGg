@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import store from '../redux/store';
+// import store from '../redux/store';
 import {
   createIncrementAction,
   createDecrementAction
@@ -17,34 +17,34 @@ export default class Count extends Component {
     // this.setState({ count: count + value * 1 });
     // 通知redux该做increment了
     // store.dispatch({ type: 'increment', data: value * 1 });
-    store.dispatch(createIncrementAction(value * 1));
+    this.props.store.dispatch(createIncrementAction(value * 1));
   }
   // decrement:
   decrement = () => {
     let { value } = this.refs.checkNumber;
-    store.dispatch(createDecrementAction(value * 1));
+    this.props.store.dispatch(createDecrementAction(value * 1));
 
   }
   // incrementIfOdd:
   incrementIfOdd = () => {
     let { value } = this.refs.checkNumber;
-    let count = store.getState();
+    let count = this.props.store.getState();
     if (count % 2 === 1) {
-      store.dispatch(createIncrementAction(value * 1));
+      this.props.store.dispatch(createIncrementAction(value * 1));
     }
   }
   // incrementAsync:
   incrementAsync = () => {
     let { value } = this.refs.checkNumber;
     setTimeout(() => {
-      store.dispatch(createIncrementAction(value * 1));
+      this.props.store.dispatch(createIncrementAction(value * 1));
     }, 1000)
   }
   render() {
     return (
       <div>
         {/* <h2>result：{this.state.count}</h2> */}
-        <h2>result：{store.getState()}</h2>
+        <h2>result：{this.props.store.getState()}</h2>
         <select ref="checkNumber">
           <option value="1">1</option>
           <option value="2">2</option>
