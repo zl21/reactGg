@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import store from '../redux/store';
-
+import {
+  createIncrementAction,
+  createDecrementAction
+} from '../redux/cocunt_action_creacor'
 
 export default class Count extends Component {
   state = { count: 0 }
@@ -13,27 +16,29 @@ export default class Count extends Component {
     // let { count } = this.state;
     // this.setState({ count: count + value * 1 });
     // 通知redux该做increment了
-    store.dispatch({ type: 'increment', data: value * 1 });
+    // store.dispatch({ type: 'increment', data: value * 1 });
+    store.dispatch(createIncrementAction(value * 1));
   }
   // decrement:
   decrement = () => {
     let { value } = this.refs.checkNumber;
-    store.dispatch({type:'decrement',data:value*1});
+    store.dispatch(createDecrementAction(value * 1));
+
   }
   // incrementIfOdd:
   incrementIfOdd = () => {
     let { value } = this.refs.checkNumber;
     let count = store.getState();
-    if(count % 2 === 1){
-      store.dispatch({type:'increment',data:value*1})
+    if (count % 2 === 1) {
+      store.dispatch(createIncrementAction(value * 1));
     }
   }
   // incrementAsync:
   incrementAsync = () => {
     let { value } = this.refs.checkNumber;
-    setTimeout(()=>{
-      store.dispatch({type:'increment',data:value*1});
-    },1000)
+    setTimeout(() => {
+      store.dispatch(createIncrementAction(value * 1));
+    }, 1000)
   }
   render() {
     return (
