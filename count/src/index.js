@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import store from './redux/store'
+import { Provider } from 'react-redux'
 
-ReactDOM.render(<App store={store}/>,document.getElementById('root'));
-// store上提供了一个用于监测state的API
-store.subscribe(()=>{
-  ReactDOM.render(<App store={store}/>,document.getElementById('root'));
-})
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'));
