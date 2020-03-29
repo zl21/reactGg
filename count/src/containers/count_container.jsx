@@ -6,14 +6,10 @@ import Count from '../components/count'
 import { connect } from 'react-redux'
 import { createIncrementAction, createDecrementAction } from '../redux/cocunt_action_creacor'
 
-function mapStateToProps(state) {
-  return { number: state }
-}
-function mapDispatchToProps(dispatch) {
-  return{
-    increase:(value)=>{dispatch(createIncrementAction(value))},
-    decrease:(value=>{dispatch(createDecrementAction(value))})
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Count);
+export default connect(
+  state =>({ number: state }),
+  {
+    increase:createIncrementAction,
+    decrease:createDecrementAction
+  })(Count);
